@@ -1,13 +1,3 @@
-"""
-EECS 445 - Winter 2024
-Project 1 - test_output.py
-
-Use this script to confirm that your challenge predictions (stored in uniqname.csv) are correctly formatted.
-To run this file, run python test_output.py -i uniqname.csv, replacing the file uniqname.csv with your generated output file.
-
-Do not edit test_output.py
-"""
-
 import sys
 import csv
 import argparse
