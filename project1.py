@@ -1,10 +1,3 @@
-"""
-EECS 445 - Winter 2024
-
-Project 1 main file.
-"""
-
-
 import itertools
 import string
 import warnings
@@ -96,7 +89,7 @@ def extract_dictionary(df: pd.DataFrame) -> dict[str, int]:
         a dictionary mapping words to an index
     """
     word_dict = {}
-    # TODO: Implement this function
+
     i = 0
     for row in df['reviewText']:
         wordlist = extract_word(row)
@@ -130,7 +123,7 @@ def generate_feature_matrix(
     number_of_reviews = df.shape[0]
     number_of_words = len(word_dict)
     feature_matrix = np.zeros((number_of_reviews, number_of_words))
-    # TODO: Implement this function
+   
 
     for i, review in enumerate(df["reviewText"]):
         wordlist = extract_word(review)
@@ -163,10 +156,7 @@ def performance(
     Returns:
         the performance as an np.float64
     """
-    # TODO: Implement this function
-    # This is an optional but very useful function to implement.
-    # See the sklearn.metrics documentation for pointers on how to implement
-    # the requested metrics.
+   
     if metric == 'accuracy':
         return metrics.accuracy_score(y_true, y_pred)
     elif metric == 'f1-score':
@@ -213,10 +203,6 @@ def cv_performance(
     Returns:
         average 'test' performance across the k folds as np.float64
     """
-    # TODO: Implement this function
-    # HINT: You may find the StratifiedKFold from sklearn.model_selection
-    # to be useful
-    # Put the performance of the model on each fold in the scores array
     scores = []
     skf = StratifiedKFold(n_splits=k, random_state=None, shuffle=False)
 
@@ -273,9 +259,7 @@ def select_param_linear(
         the parameter value for a linear-kernel SVM that maximizes the
         average 5-fold CV performance.
     """
-    # TODO: Implement this function
-    # HINT: You should be using your cv_performance function here
-    # to evaluate the performance of each SVM
+
     max_performance = -np.inf
     best_C = None
 
@@ -314,10 +298,7 @@ def plot_weight(
         Saves a plot of the L0 norms to the filesystem.
     """
     norm0 = []
-    # TODO: Implement this part of the function
-    # Here, for each value of c in C_range, you should
-    # append to norm0 the L0-norm of the theta vector that is learned
-    # when fitting an L2- or L1-penalty, degree=1 SVM to the data (X, y)
+
     for i in C_range:
         clf = LinearSVC(penalty=penalty, C=i, loss=loss, dual=dual)
         clf.fit(X, y)
@@ -365,9 +346,7 @@ def select_param_quadratic(
         The parameter values for a quadratic-kernel SVM that maximize
         the average 5-fold CV performance as a pair (C,r)
     """
-    # TODO: Implement this function
-    # Hint: This will be very similar to select_param_linear, except
-    # the type of SVM model you are using will be different...
+
     best_C_val, best_r_val = 0.0, 0.0
     max_performance = -np.inf
 
@@ -399,7 +378,7 @@ def train_word2vec(filename: str) -> Word2Vec:
     """
     df = load_data(filename)
     sentences = []
-    # TODO: Complete this function
+
     for review in df['reviewText']:
         words = extract_word(review)
         sentences.append(words)
@@ -419,9 +398,6 @@ def compute_association(filename: str, w: str, A: list[str], B: list[str]) -> fl
     """
     model = train_word2vec(filename)
 
-    # First, we need to find a numerical representation for the English language words in A and B
-
-    # TODO: Complete words_to_array()
     def words_to_array(s: list[str]) -> npt.NDArray[np.float64]:
         """Convert a list of string words into a 2D numpy array of word embeddings,
         where the ith row is the embedding vector for the ith word in the input set (0-indexed).
@@ -438,7 +414,6 @@ def compute_association(filename: str, w: str, A: list[str], B: list[str]) -> fl
                 emb.append(model.wv[word])
         return np.array(emb)
 
-    # TODO: Complete cosine_similarity()
     def cosine_similarity(
         array: npt.NDArray[np.float64], w: npt.NDArray[np.float64]
     ) -> npt.NDArray[np.float64]:
@@ -462,9 +437,6 @@ def compute_association(filename: str, w: str, A: list[str], B: list[str]) -> fl
             # similarities.append(similarity)
         return similarity
 
-    # Although there may be some randomness in the word embeddings, we have provided the
-    # following test case to help you debug your cosine_similarity() function:
-    # This is not an exhaustive test case, so add more of your own!
     test_arr = np.array([[4, 5, 6], [9, 8, 7]])
     test_w = np.array([1, 2, 3])
     test_sol = np.array([0.97463185, 0.88265899])
@@ -478,9 +450,6 @@ def compute_association(filename: str, w: str, A: list[str], B: list[str]) -> fl
     expected_result = np.array([0, 1])
     assert np.allclose(cosine_similarity(test_arr, test_w), expected_result)
 
-    # TODO: Return the association between w, A, and B.
-    #      Compute this by finding the difference between the mean cosine similarity between w and the words in A,
-    #      and the mean cosine similarity between w and the words in B
     emb_A = words_to_array(A)
     emb_B = words_to_array(B)
     emb_w = model.wv[w]
@@ -600,17 +569,6 @@ def mod_generate_feature_matrix(
     return feature_matrix
 
 def main() -> None:
-    # Read binary data
-    # NOTE: Use the X_train, Y_train, X_test, and Y_test provided below as the training set and test set
-    #       for the reviews in the file you read in.
-    #
-    #       Your implementations of extract_dictionary() and generate_feature_matrix() will be called
-    #       to produce these training and test sets (for more information, see get_split_binary_data() in helper.py).
-    #       DO NOT reimplement or edit the code we provided in get_split_binary_data().
-    #
-    #       Please note that dictionary_binary will not be correct until you have correctly implemented extract_dictionary(),
-    #       and X_train, Y_train, X_test, and Y_test will not be correct until you have correctly
-    #       implemented extract_dictionary() and generate_feature_matrix().
     filename = "data/dataset.csv"
 
 
@@ -621,7 +579,6 @@ def main() -> None:
         dictionary_binary, filename=filename
     )
     
-    # TODO: Questions 2, 3, 4, 5
     """
     # 2a
     print(extract_word("It's a test sentence! Does it look CORRECT?"))
@@ -835,10 +792,6 @@ def main() -> None:
     B = ['him', 'man', 'men']
     print(compute_association(filename, 'smart', A, B))
     """
-
-    # Read multiclass data
-    # TODO: Question 6: Apply a classifier to heldout features, and then use
-    #       generate_challenge_labels to print the predicted labels
 
     (
         multiclass_features,
