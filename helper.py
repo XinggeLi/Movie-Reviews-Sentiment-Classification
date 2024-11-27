@@ -1,12 +1,3 @@
-"""
-EECS 445 - Winter 2024
-
-Utility functions to help load and manipulate data.
-
-Do not edit these functions for sections 2-5 of the project.
-"""
-
-
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
